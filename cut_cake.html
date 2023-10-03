@@ -1,45 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cake Cutting Game</title>
+    <title>Cake Cutting Game with Fireworks</title>
     <style>
         body {
+            background-color: #f9e4b7; /* Cream background color */
             text-align: center;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh; /* This ensures the content takes up the full viewport height */
             margin: 0; /* Remove default margin */
+            overflow: hidden; /* Hide any overflow */
         }
         .cake-container {
             position: relative;
+            margin-top: 20px; /* Add margin to separate the text and cake */
         }
         .cake-img {
-            width: 200px;
-            height: 200px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto; /* Center the cake horizontally and vertically within its container */
+            width: 300px; /* Make the cake bigger */
+            height: 300px; /* Adjust the height accordingly */
+            position: relative; /* Change position to relative */
             z-index: 1; /* Ensure the cake image is behind the knife image */
         }
         .knife {
-            width: 100px; /* Make the knife larger */
-            position: absolute;
-            bottom: 10px;
-            left: 75px;
-            z-index: 2; /* Ensure the knife image is on top */
-            transform-origin: center bottom;
-            transform: rotate(0deg); /* Initial rotation of 0 degrees */
+            width: 150px; /* Make the knife larger */
+            position: absolute; /* Change position to absolute */
+            top: 70%; /* Move the knife 70% down from the top (south) */
+            left: 30%; /* Move the knife 30% to the right (west) */
+            transform: translate(-50%, -50%) rotate(0deg); /* Center the knife horizontally and vertically, and initial rotation of 0 degrees */
+            z-index: 2; /* Ensure the knife image is on top of the cake */
             transition: transform 0.5s ease-in-out;
+        }
+        .text {
+            font-size: 24px; /* Font size for other text */
+            margin-bottom: 20px; /* Add space below the text */
+            color: #8b735b; /* Muddy brown text color */
+        }
+
+        .heartbeat-text {
+            font-size: 36px; /* Increase font size for a celebratory look */
+            font-family: "Brush Script MT", cursive; /* Use a cursive font for a celebratory feel */
+            color: #ff6b6b; /* Change text color to a festive red */
+            margin-bottom: 20px; /* Add space below the text */
+            animation: double-heartbeat 2s infinite; /* Apply the double heartbeat animation */
+        }
+
+        @keyframes double-heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .cake-img.after {
+            /* Adjust the width of the second cake image to make it slightly smaller */
+            width: 250px;
+            height: auto;
+        }
+
+        /* Text animation for appearing from left to right */
+        @keyframes text-appear {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .appearing-text {
+            font-size: 24px;
+            animation: text-appear 2s forwards; /* Apply the text-appear animation */
+            color: #8b735b; /* Muddy brown text color */
+            white-space: nowrap; /* Prevent line breaks in the text */
+            overflow: hidden; /* Hide overflow characters */
+            border-right: 3px solid #8b735b; /* Create a typing cursor effect */
+            padding-right: 5px; /* Add padding for cursor effect */
+        }
+
+        /* Fireworks animation */
+        @keyframes fireworks {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-200px) scale(0.5);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-400px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .firework {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            animation: fireworks 1s ease-out;
+        }
+
+        /* Translucent text */
+        .translucent-text {
+            font-size: 18px;
+            color: rgba(139, 115, 91, 0.7); /* Translucent muddy brown text color */
+            margin-bottom: 10px; /* Add space below the text */
         }
     </style>
 </head>
 <body>
-    <h1>Cake Cutting Game</h1>
-    <p>Click the cake to cut it!</p>
+    <h1 class="text heartbeat-text">Happy birthday Saumya</h1>
+    <p class="translucent-text">Click on the cake to cut it</p>
+    <p class="appearing-text" id="cake-text"></p> <!-- Empty paragraph for typing effect -->
     <div class="cake-container">
         <!-- Cake image before cutting -->
         <img src="cake1.png" alt="Cake Before Cutting" class="cake-img before" id="cake-before">
@@ -52,21 +133,65 @@
         const cakeBefore = document.getElementById('cake-before');
         const cakeAfter = document.getElementById('cake-after');
         const knife = document.getElementById('knife');
+        const cakeText = document.getElementById('cake-text');
+        const translucentText = document.querySelector('.translucent-text');
 
         cakeBefore.addEventListener('click', () => {
-            // Rotate the knife to simulate cutting and move it downward
-            knife.style.transform = 'rotate(45deg) translateY(100px)'; /* Rotate by 45 degrees and move 100px down */
+            // Create and append fireworks elements
+            for (let i = 0; i < 30; i++) {
+                createFirework();
+            }
+
+            // Rotate the knife to simulate cutting and move it downward and southwest
+            knife.style.transform = 'translate(-50%, -50%) rotate(45deg) translateY(50px)'; /* Rotate by 45 degrees, keep it centered, and move it 50px down */
 
             // Hide the cake before cutting and display the cake after cutting
             cakeBefore.style.display = 'none';
             cakeAfter.style.display = 'block';
 
-            // Remove the cake layer after a delay
-            setTimeout(() => {
-                cakeAfter.style.height = '100px';
-                cakeAfter.style.borderRadius = '50px 50px 0 0';
-            }, 500);
+            // Maintain the width of the second cake image, letting the height adjust to maintain the aspect ratio
+            cakeAfter.style.width = '250px'; /* Adjusted width */
+            cakeAfter.style.height = 'auto';
+
+            // Adjust the border-radius to maintain appearance
+            cakeAfter.style.borderRadius = '0 0 50px 50px';
+
+            // Update the text after clicking with typing effect
+            typeText("Virtually toh I can send you something", cakeText);
+
+            // Hide the translucent text
+            translucentText.style.display = 'none';
         });
+
+        // Function to simulate typing effect
+        function typeText(text, element) {
+            let index = 0;
+            const speed = 50; // Typing speed in milliseconds
+
+            function type() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, speed);
+                }
+            }
+
+            type();
+        }
+
+        // Function to create a fireworks element
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            document.body.appendChild(firework);
+            firework.addEventListener('animationend', () => {
+                firework.remove(); // Remove the fireworks element after the animation
+            });
+        }
     </script>
 </body>
 </html>
