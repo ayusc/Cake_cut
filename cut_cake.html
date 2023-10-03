@@ -19,13 +19,13 @@
             margin-top: 20px; /* Add margin to separate the text and cake */
         }
         .cake-img {
-            width: 750px; /* Make the cake bigger (2.5 times) */
-            height: 750px; /* Adjust the height accordingly */
+            width: 300px; /* Make the cake bigger */
+            height: 300px; /* Adjust the height accordingly */
             position: relative; /* Change position to relative */
             z-index: 1; /* Ensure the cake image is behind the knife image */
         }
         .knife {
-            width: 375px; /* Make the knife larger (2.5 times) */
+            width: 150px; /* Make the knife larger */
             position: absolute; /* Change position to absolute */
             top: 70%; /* Move the knife 70% down from the top (south) */
             left: 30%; /* Move the knife 30% to the right (west) */
@@ -34,16 +34,16 @@
             transition: transform 0.5s ease-in-out;
         }
         .text {
-            font-size: 60px; /* Font size for other text (2.5 times) */
-            margin-bottom: 30px; /* Add space below the text */
+            font-size: 24px; /* Font size for other text */
+            margin-bottom: 20px; /* Add space below the text */
             color: #8b735b; /* Muddy brown text color */
         }
 
         .heartbeat-text {
-            font-size: 90px; /* Increase font size for a celebratory look (2.5 times) */
+            font-size: 36px; /* Increase font size for a celebratory look */
             font-family: "Brush Script MT", cursive; /* Use a cursive font for a celebratory feel */
             color: #ff6b6b; /* Change text color to a festive red */
-            margin-bottom: 30px; /* Add space below the text */
+            margin-bottom: 20px; /* Add space below the text */
             animation: double-heartbeat 2s infinite; /* Apply the double heartbeat animation */
         }
 
@@ -57,8 +57,8 @@
         }
 
         .cake-img.after {
-            /* Adjust the width of the second cake image to make it slightly smaller (2.5 times) */
-            width: 600px;
+            /* Adjust the width of the second cake image to make it slightly smaller */
+            width: 250px;
             height: auto;
         }
 
@@ -75,7 +75,7 @@
         }
 
         .appearing-text {
-            font-size: 60px; /* Font size for appearing text (2.5 times) */
+            font-size: 24px;
             animation: text-appear 2s forwards; /* Apply the text-appear animation */
             color: #8b735b; /* Muddy brown text color */
             white-space: nowrap; /* Prevent line breaks in the text */
@@ -91,44 +91,43 @@
                 opacity: 1;
             }
             50% {
-                transform: translateY(-500px) scale(2); /* Increase scale for larger fireworks */
+                transform: translateY(-200px) scale(0.5);
                 opacity: 0.5;
             }
             100% {
-                transform: translateY(-1000px) scale(3); /* Increase scale for larger fireworks */
+                transform: translateY(-400px) scale(0);
                 opacity: 0;
             }
         }
 
         .firework {
-            width: 50px; /* Increase size of fireworks (2.5 times) */
-            height: 50px; /* Increase size of fireworks (2.5 times) */
+            width: 20px;
+            height: 20px;
             position: absolute;
             background-color: #ff6b6b;
             border-radius: 50%;
-            animation: fireworks 2s ease-out; /* Adjust animation duration */
+            animation: fireworks 1s ease-out;
         }
 
         /* Translucent text */
         .translucent-text {
-            font-size: 45px; /* Increase font size for translucent text (2.5 times) */
+            font-size: 18px;
             color: rgba(139, 115, 91, 0.7); /* Translucent muddy brown text color */
-            margin-bottom: 20px; /* Add space below the text */
+            margin-bottom: 10px; /* Add space below the text */
         }
     </style>
 </head>
 <body>
     <h1 class="text heartbeat-text">Happy birthday Saumya</h1>
-    <p class="appearing-text" id="cake-text"></p> <!-- Empty paragraph for typing effect -->
     <p class="translucent-text">Click on the cake to cut it</p>
-    <p class="appearing-text">Virtually toh I can send you something</p> <!-- Text that appears after clicking the cake -->
+    <p class="appearing-text" id="cake-text"></p> <!-- Empty paragraph for typing effect -->
     <div class="cake-container">
         <!-- Cake image before cutting -->
-        <img src="cake1.png" alt="Cake Before Cutting" class="cake-img before" id="cake-before">
+        <img src="/home/ujjwal/Downloads/cake1.png" alt="Cake Before Cutting" class="cake-img before" id="cake-before">
         <!-- Cake image after cutting (initially hidden) -->
-        <img src="cake2.png" alt="Cake After Cutting" class="cake-img after" id="cake-after" style="display: none;">
+        <img src="/home/ujjwal/Downloads/cake2.png" alt="Cake After Cutting" class="cake-img after" id="cake-after" style="display: none;">
         <!-- Knife image -->
-        <img src="knife.png" alt="Real Knife" class="knife" id="knife">
+        <img src="/home/ujjwal/Downloads/knife.png" alt="Real Knife" class="knife" id="knife">
     </div>
     <script>
         const cakeBefore = document.getElementById('cake-before');
@@ -144,18 +143,18 @@
             }
 
             // Rotate the knife to simulate cutting and move it downward and southwest
-            knife.style.transform = 'translate(-50%, -50%) rotate(45deg) translateY(150px) translateX(-75px) scale(2.5)'; /* Rotate by 45 degrees, keep it centered, move it 150px down and 75px left (2.5 times size) */
+            knife.style.transform = 'translate(-50%, -50%) rotate(45deg) translateY(50px)'; /* Rotate by 45 degrees, keep it centered, and move it 50px down */
 
             // Hide the cake before cutting and display the cake after cutting
             cakeBefore.style.display = 'none';
             cakeAfter.style.display = 'block';
 
             // Maintain the width of the second cake image, letting the height adjust to maintain the aspect ratio
-            cakeAfter.style.width = '600px'; /* Adjusted width (2.5 times) */
+            cakeAfter.style.width = '250px'; /* Adjusted width */
             cakeAfter.style.height = 'auto';
 
             // Adjust the border-radius to maintain appearance
-            cakeAfter.style.borderRadius = '0 0 150px 150px';
+            cakeAfter.style.borderRadius = '0 0 50px 50px';
 
             // Update the text after clicking with typing effect
             typeText("Virtually toh I can send you something", cakeText);
