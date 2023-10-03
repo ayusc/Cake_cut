@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cake Cutting Game</title>
+    <style>
+        body {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content takes up the full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+        .cake-container {
+            position: relative;
+        }
+        .cake-img {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto; /* Center the cake horizontally and vertically within its container */
+            z-index: 1; /* Ensure the cake image is behind the knife image */
+        }
+        .knife {
+            width: 100px; /* Make the knife larger */
+            position: absolute;
+            bottom: 10px;
+            left: 75px;
+            z-index: 2; /* Ensure the knife image is on top */
+            transform-origin: center bottom;
+            transform: rotate(0deg); /* Initial rotation of 0 degrees */
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cake Cutting Game</h1>
+    <p>Click the cake to cut it!</p>
+    <div class="cake-container">
+        <!-- Cake image before cutting -->
+        <img src="/home/ujjwal/Downloads/cake1.png" alt="Cake Before Cutting" class="cake-img before" id="cake-before">
+        <!-- Cake image after cutting (initially hidden) -->
+        <img src="/home/ujjwal/Downloads/cake2.png" alt="Cake After Cutting" class="cake-img after" id="cake-after" style="display: none;">
+        <!-- Knife image -->
+        <img src="/home/ujjwal/Downloads/knife.png" alt="Real Knife" class="knife" id="knife">
+    </div>
+    <script>
+        const cakeBefore = document.getElementById('cake-before');
+        const cakeAfter = document.getElementById('cake-after');
+        const knife = document.getElementById('knife');
+
+        cakeBefore.addEventListener('click', () => {
+            // Rotate the knife to simulate cutting and move it downward
+            knife.style.transform = 'rotate(45deg) translateY(100px)'; /* Rotate by 45 degrees and move 100px down */
+
+            // Hide the cake before cutting and display the cake after cutting
+            cakeBefore.style.display = 'none';
+            cakeAfter.style.display = 'block';
+
+            // Remove the cake layer after a delay
+            setTimeout(() => {
+                cakeAfter.style.height = '100px';
+                cakeAfter.style.borderRadius = '50px 50px 0 0';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
